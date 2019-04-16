@@ -11,6 +11,7 @@ $config['default_method']     = 'index';
 
 
 $config['database'] = array(
+  'database' => 'dev',
   'hostname' => 'localhost',
   'username' => 'postgres',
   'password' => '123aparecida',

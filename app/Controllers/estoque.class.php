@@ -18,7 +18,7 @@ class estoque extends Controller {
       $this->redirect("/sgfnsa/login/view/login.php");
     }
 
-    
+    $this->model('TestModel')->test();
 
   }
 }

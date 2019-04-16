@@ -52,7 +52,8 @@ class EasyPHP {
       $routeExploded = explode('/',trim(strip_tags($route)));
       $this->Controller = $routeExploded[0];
       unset($routeExploded[0]);
-      $this->Method = $routeExploded[1];
+      $this->Method = (isset($routeExploded[1]) ? $routeExploded[1] : $this->Config['default_method']);
+      unset($routeExploded[1]);
       $this->Arguments = array_values($routeExploded);
     }
     $this->next();

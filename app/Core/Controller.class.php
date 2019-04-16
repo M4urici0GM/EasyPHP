@@ -9,18 +9,20 @@ namespace app\Core;
 
 use app\Core\Input;
 use app\Core\Session;
+use app\Core\Load;
 
-class Controller {
+class Controller{
   public $input;
   public $session;
   private $template;
-
+  private $modelFolder;
+  private $modelFile;
 
   function __construct() {
-    $this->input = new Input();
-    $this->session = new Session();
-    $this->template = array('header' => [], 'footer' => []);
-
+    $this->input       = new Input();
+    $this->session     = new Session();
+    $this->template    = array('header' => [], 'footer' => []);
+    $this->modelFolder = WWW_ROOT . DS . "app" . DS . "Models" . DS;
   }
 
   public function view($view = "", $data = []) {
@@ -39,6 +41,22 @@ class Controller {
     } else {
       exit("Please, expecify an view name!.");
     }
+  }
+
+  public function model($modelName) {
+    if (!empty($model)) {
+      throw new \InvalidArgumentException("Model name needed!");
+      die();
+    }
+
+    if (!file_exists($this->modelFolder . $modelName . ".class.php")) {
+      throw new \InvalidArgumentException("Model file not found!, did you named the class correctly ?");
+      die();
+    }
+
+    require_once($this->modelFolder . $modelName . ".class.php");
+    $this->$modelName = new $modelName;
+    return $this->$modelName;
   }
 
   public function setTemplate($header = "", $footer = "") {
